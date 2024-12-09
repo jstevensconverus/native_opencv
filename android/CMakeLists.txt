@@ -9,13 +9,13 @@ add_library( # Sets the name of the library.
         native_opencv
         SHARED
         # Provides a relative path to your source file(s).
-        ../ios/Classes/EyeTracker/EyeTracker.cpp
-        ../ios/Classes/native_opencv.cpp
+        ../android/Classes/EyeTracker/EyeTracker.cpp
+        ../android/Classes/native_opencv.cpp
         )
 
 target_include_directories(
         native_opencv PRIVATE
-        ../ios/Classes/EyeTracker
+        ../android/Classes/EyeTracker
 )
 
 find_library(log-lib log)

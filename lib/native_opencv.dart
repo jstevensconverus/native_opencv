@@ -66,7 +66,7 @@ class NativeOpenCV {
     calloc.free(xmlFilePathPtr);
   }
 
-  Future<List<EyeDetection>> detectEyes(
+  Future<List<Rect>> detectEyes(
     Uint8List image,
     int width,
     int height,
@@ -88,7 +88,7 @@ class NativeOpenCV {
       minNeighbors,
     ).toDartString();
 
-    final List<EyeDetection> detectionList = [];
+    final List<Rect> detectionList = [];
     if (detections != "null") {
       final jsonData = json.decode(detections);
 
@@ -97,7 +97,8 @@ class NativeOpenCV {
         final int y = eyeData['y'];
         final int width = eyeData['width'];
         final int height = eyeData['height'];
-        detectionList.add(EyeDetection(x, y, width, height));
+        detectionList
+            .add(Rect.fromLTWH(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble()));
       }
     }
 
@@ -118,13 +119,4 @@ class NativeOpenCV {
   String cvVersion() {
     return _version().toDartString();
   }
-}
-
-class EyeDetection {
-  final int x;
-  final int y;
-  final int width;
-  final int height;
-
-  EyeDetection(this.x, this.y, this.width, this.height);
 }
