@@ -7,8 +7,9 @@ import 'package:ffi/ffi.dart';
 import 'package:flutter/services.dart';
 
 // Dynamic library that contains the native C++ code
-final DynamicLibrary nativeLib =
-    Platform.isAndroid ? DynamicLibrary.open("libnative_opencv.so") : DynamicLibrary.process();
+final DynamicLibrary nativeLib = Platform.isAndroid
+    ? DynamicLibrary.open("libnative_opencv.so")
+    : DynamicLibrary.process();
 
 // Mappings between the C++ functions and their Dart counterparts.
 typedef _c_version = Pointer<Utf8> Function();
@@ -20,16 +21,31 @@ typedef _dart_initDetector = void Function(Pointer<Utf8> xmlFilePath);
 typedef _c_destroyDetector = Void Function();
 typedef _dart_destroyDetector = void Function();
 
-typedef _c_detect_eyes = Pointer<Utf8> Function(Pointer<Utf8> image, Int32 width, Int32 height,
-    Int32 channels, Double scaleFactor, Int32 minNeighbors);
-typedef _dart_detect_eyes = Pointer<Utf8> Function(
-    Pointer<Utf8> image, int width, int height, int channels, double scaleFactor, int minNeighbors);
+typedef _c_detect_eyes =
+    Pointer<Utf8> Function(
+      Pointer<Utf8> image,
+      Int32 width,
+      Int32 height,
+      Int32 channels,
+      Double scaleFactor,
+      Int32 minNeighbors,
+    );
+typedef _dart_detect_eyes =
+    Pointer<Utf8> Function(
+      Pointer<Utf8> image,
+      int width,
+      int height,
+      int channels,
+      double scaleFactor,
+      int minNeighbors,
+    );
 
 // Look up the corresponding C++ functions in the dynamic library. This allows Dart to call the native functions directly.
 final _version = nativeLib.lookupFunction<_c_version, _dart_version>('version');
 final _initDetector = nativeLib.lookupFunction<_c_initDetector, _dart_initDetector>('initDetector');
-final _destroyDetector =
-    nativeLib.lookupFunction<_c_destroyDetector, _dart_destroyDetector>('destroyDetector');
+final _destroyDetector = nativeLib.lookupFunction<_c_destroyDetector, _dart_destroyDetector>(
+  'destroyDetector',
+);
 final _detectEyes = nativeLib.lookupFunction<_c_detect_eyes, _dart_detect_eyes>('detectEyes');
 
 // Class NativeOpencv has methods for initializing the OpenCV detector, detecting eyes, and cleaning up memory allocation.
@@ -97,8 +113,9 @@ class NativeOpenCV {
         final int y = eyeData['y'];
         final int width = eyeData['width'];
         final int height = eyeData['height'];
-        detectionList
-            .add(Rect.fromLTWH(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble()));
+        detectionList.add(
+          Rect.fromLTWH(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble()),
+        );
       }
     }
 
