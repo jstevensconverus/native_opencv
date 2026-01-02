@@ -2,9 +2,20 @@
 
 The Native OpenCV plugin provides a bridge between Flutter and native code (C++) to leverage OpenCV functionalities for eye detection.
 
-## Getting Started
+# native_opencv
 
-Follow these instructions to integrate the Native OpenCV plugin into your Flutter project.
+Flutter plugin for OpenCV.
+
+## Setup
+
+1. Download OpenCV Android SDK 4.12.0+ from https://opencv.org/releases/
+2. Extract it and set the environment variable:
+
+```bash
+   export OPENCV_ANDROID="$HOME/path/to/OpenCV-android-sdk"
+```
+
+3. Add to your `~/.bash_profile` or `~/.zshrc`
 
 ### Installation
 
